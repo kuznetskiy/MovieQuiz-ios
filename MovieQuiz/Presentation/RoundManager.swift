@@ -1,6 +1,6 @@
 import UIKit
 
-class Round: QuestionFactoryDelegate {
+class RoundManager: QuestionFactoryDelegate {
     
     weak var delegate: RoundDelegate?
     private let questionFactory = QuestionFactory()
@@ -40,7 +40,7 @@ class Round: QuestionFactoryDelegate {
     }
     
     func getCountQuestions() -> Int {
-        correctAnswersCount
+        questionCount
     }
     
     func getCorrectCountAnswer() -> Int {

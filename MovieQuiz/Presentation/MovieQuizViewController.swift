@@ -9,7 +9,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, R
     @IBOutlet private weak var yesButton: UIButton!
     
     private let alertPresenter = AlertPresenter()
-    private var currentRound: Round?
+    private var currentRound: RoundManager?
     private var statisticService: StatisticService?
     
     override func viewDidLoad() {
@@ -32,7 +32,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, R
     
     private func startNewRound() {
         setAnswerButtonsEnabled(true)
-        currentRound = Round()
+        currentRound = RoundManager()
         currentRound?.delegate = self
         currentRound?.requestNextQuestion()
     }
@@ -45,7 +45,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, R
         setAnswerButtonsEnabled(true)
     }
     
-    func roundDidEnd(_ round: Round, withResult gameRecord: GameRecord) {
+    func roundDidEnd(_ round: RoundManager, withResult gameRecord: GameRecord) {
         statisticService = StatisticServiceImplementation()
         showQuizResults()
     }
@@ -56,7 +56,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, R
     
     private func showQuizResults() {
         let model1 = statisticService
-        let alertModel1 = convert1(model: model1)
+        let alertModel1 = convertToAlertModel(model: model1)
         alertPresenter.present(alertModel: alertModel1, on: self)
     }
     
@@ -97,7 +97,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, R
         )
     }
     
-    private func convert1(model: StatisticService?) -> AlertModel {
+    private func convertToAlertModel(model: StatisticService?) -> AlertModel {
         guard let bestGame = model?.bestGame else {
             return AlertModel(title: "Ошибка", message: "Данные недоступны", buttonText: "ОК")
         }
@@ -126,7 +126,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, R
         return alertModel
     }
     
-    fileprivate func printAllUserDefaults() {
+    private func printAllUserDefaults() {
         let userDefaults = UserDefaults.standard
         print("All UserDefaults:")
         for (key, value) in userDefaults.dictionaryRepresentation() {
@@ -134,7 +134,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, R
         }
     }
     
-    fileprivate func remove() {
+    private func remove() {
         if let bundleID = Bundle.main.bundleIdentifier {
             UserDefaults.standard.removePersistentDomain(forName: bundleID)
         }
