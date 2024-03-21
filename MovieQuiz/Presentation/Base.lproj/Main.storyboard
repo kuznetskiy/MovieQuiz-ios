@@ -46,14 +46,14 @@
                                         </subviews>
                                     </stackView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OCf-RN-pQx" userLabel="Preview Image">
-                                        <rect key="frame" x="0.0" y="43.5" width="146" height="218.5"/>
+                                        <rect key="frame" x="0.0" y="43.5" width="130.5" height="196"/>
                                         <color key="backgroundColor" name="YP White"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="OCf-RN-pQx" secondAttribute="height" multiplier="2:3" id="fmD-93-SGE"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рейтинг этого фильма меньше чем 5?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fqn-JY-gfP" userLabel="Question Label">
-                                        <rect key="frame" x="0.0" y="282" width="280" height="176"/>
+                                        <rect key="frame" x="0.0" y="259.5" width="280" height="198.5"/>
                                         <fontDescription key="fontDescription" name="YSDisplay-Bold" family="YS Display" pointSize="23"/>
                                         <color key="textColor" name="YP White"/>
                                         <nil key="highlightedColor"/>
@@ -109,6 +109,10 @@
                                     <constraint firstAttribute="trailing" secondItem="I4a-8M-Gve" secondAttribute="trailing" id="xkf-I0-cyy"/>
                                 </constraints>
                             </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="p2a-fN-7vs">
+                                <rect key="frame" x="94" y="274" width="130.5" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="YP Black"/>
@@ -120,6 +124,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="p2a-fN-7vs" id="2Tt-2e-LeY"/>
                         <outlet property="counterLabel" destination="I4a-8M-Gve" id="veb-cy-ygh"/>
                         <outlet property="imageView" destination="OCf-RN-pQx" id="4df-o7-pmt"/>
                         <outlet property="noButton" destination="gYg-p1-Pvi" id="BsC-b9-uJY"/>

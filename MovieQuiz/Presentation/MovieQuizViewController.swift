@@ -7,6 +7,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, R
     @IBOutlet private var textLabel: UILabel!
     @IBOutlet private weak var noButton: UIButton!
     @IBOutlet private weak var yesButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private let alertPresenter = AlertPresenter()
     private var currentRound: RoundManager?
@@ -31,10 +32,15 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, R
     }
     
     private func startNewRound() {
-        setAnswerButtonsEnabled(true)
+        showLoadingIndicator()
         currentRound = RoundManager()
+        setAnswerButtonsEnabled(true)
         currentRound?.delegate = self
         currentRound?.requestNextQuestion()
+    }
+    
+    func didLoadDataFromServer() {
+        hideLoadingIndicator()
     }
     
     func didReceiveNewQuestion(_ question: QuizQuestion?) {
@@ -54,6 +60,10 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, R
         startNewRound()
     }
     
+    func didFailToLoadData(with error: Error) {
+        showNetworkError(message: error.localizedDescription)
+    }
+    
     private func showQuizResults() {
         let model1 = statisticService
         let alertModel1 = convertToAlertModel(model: model1)
@@ -67,10 +77,27 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, R
         imageView.layer.borderColor = UIColor.clear.cgColor
     }
     
+    private func showNetworkError(message: String) {
+        hideLoadingIndicator()
+        
+        let alertModel = AlertModel(title: "Ошибка", message: message, buttonText: "Попробовать ещё раз")
+        alertPresenter.present(alertModel: alertModel, on: self)
+    }
+    
     private func showQuestionAnswerResult(isCorrect: Bool) {
         UIView.animate(withDuration: 1.0, animations: { [weak self] in
             self?.imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
         })
+    }
+    
+    private func showLoadingIndicator() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+    
+    private func hideLoadingIndicator() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
     }
     
     @IBAction private func noButtonClicked(_ sender: UIButton) {
@@ -91,7 +118,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, R
         let displayNumber = questionNumber + 1
     
         return QuizStepViewModel(
-            image: UIImage(named: model.image) ?? UIImage(),
+            image: UIImage(data: model.image) ?? UIImage(),
             question: model.text,
             questionNumber: "\(displayNumber) / \(totalQuestions)"
         )

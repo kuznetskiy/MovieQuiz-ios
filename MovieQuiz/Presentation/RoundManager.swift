@@ -3,7 +3,7 @@ import UIKit
 class RoundManager: QuestionFactoryDelegate {
     
     weak var delegate: RoundDelegate?
-    private let questionFactory = QuestionFactory()
+    private let questionFactory = QuestionFactory(moviesLoader: MoviesLoader())
     private var currentQuestion: QuizQuestion?
     private var currentQuestionIndex: Int = 0
     private var correctAnswersCount: Int = 0
@@ -12,7 +12,7 @@ class RoundManager: QuestionFactoryDelegate {
     
     init() {
         questionFactory.delegate = self
-        questionFactory.requestNextQuestion()
+        questionFactory.loadData()
     }
     
     func didReceiveNextQuestion(question: QuizQuestion?) {
@@ -22,6 +22,15 @@ class RoundManager: QuestionFactoryDelegate {
         } else if isRoundComplete() {
             finishRound()
         }
+    }
+    
+    func didLoadDataFromServer() {
+        delegate?.didLoadDataFromServer()
+        questionFactory.requestNextQuestion()
+    }
+    
+    func didFailToLoadData(with error: Error) {
+        delegate?.didFailToLoadData(with: error)
     }
     
     func requestNextQuestion() {
