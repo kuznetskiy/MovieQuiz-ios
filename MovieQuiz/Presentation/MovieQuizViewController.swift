@@ -7,7 +7,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate, R
     @IBOutlet private var textLabel: UILabel!
     @IBOutlet private weak var noButton: UIButton!
     @IBOutlet private weak var yesButton: UIButton!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     private let alertPresenter = AlertPresenter()
     private var currentRound: RoundManager?
