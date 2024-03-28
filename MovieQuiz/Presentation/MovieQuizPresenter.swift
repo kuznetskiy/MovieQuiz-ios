@@ -70,7 +70,7 @@ final class MovieQuizPresenter: RoundDelegate {
             message: """
             Ваш результат: \(correctAnswers) / \(totalQuestions)
             Количество сыгранных квизов: \(gamesCount)
-            Рекорд: \(recordCorrect) / \(recordTotal) (\recordDate.dateTimeString))
+            Рекорд: \(recordCorrect) / \(recordTotal) (\(recordDate.dateTimeString))
             Средняя точность: \(gamesAccuracy)%
             """,
             buttonText: "Сыграть ещё раз"

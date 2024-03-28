@@ -1,6 +1,6 @@
 import UIKit
 
-class RoundManager: QuestionFactoryDelegate {
+final class RoundManager: QuestionFactoryDelegate {
     
     weak var delegate: RoundDelegate?
     private let questionFactory = QuestionFactory(moviesLoader: MoviesLoader())
